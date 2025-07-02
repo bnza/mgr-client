@@ -27,29 +27,49 @@ try {
 
   // Find all collection operations (GET operations that return collections)
   const collectionOperations = [];
+  // Find all item operations (GET operations that return single items)
+  const itemOperations = [];
 
   if (openApiSpec.paths) {
     Object.entries(openApiSpec.paths).forEach(([path, pathItem]) => {
       if (pathItem.get) {
         const operation = pathItem.get;
-        // Check if it's a collection operation by looking for operationId ending with 'get_collection'
-        if (operation.operationId && operation.operationId.endsWith('_get_collection')) {
-          collectionOperations.push({
-            path,
-            operationId: operation.operationId
-          });
+        if (operation.operationId) {
+          // Check if it's a collection operation
+          if (operation.operationId.endsWith('_get_collection')) {
+            collectionOperations.push({
+              path,
+              operationId: operation.operationId
+            });
+          }
+          // Check if it's an item operation (GET with path parameters, typically ending with '_get')
+          else if (operation.operationId.endsWith('_id_get') &&
+            operation.parameters &&
+            operation.parameters.some(param => param.in === 'path')) {
+            itemOperations.push({
+              path,
+              operationId: operation.operationId
+            });
+          }
         }
       }
     });
   }
 
-  if (collectionOperations.length === 0) {
-    console.warn("No collection operations found");
+  if (collectionOperations.length === 0 && itemOperations.length === 0) {
+    console.warn("No collection or item operations found");
     process.exit(0);
   }
 
-  // Generate CollectionResponses type
-  const responseEntries = collectionOperations
+  // Generate GetCollectionPathResponseMap type
+  const collectionResponseEntries = collectionOperations
+    .map(({path, operationId}) =>
+      `  '${path}': operations['${operationId}']['responses'][200]['content']['application/ld+json']`
+    )
+    .join('\n');
+
+  // Generate ItemResponses type
+  const itemResponseEntries = itemOperations
     .map(({path, operationId}) =>
       `  '${path}': operations['${operationId}']['responses'][200]['content']['application/ld+json']`
     )
@@ -60,20 +80,25 @@ try {
 
 import { operations } from './openapi'
 
-export type CollectionResponses = {
-${responseEntries}
+export type GetCollectionPathResponseMap = {
+${collectionResponseEntries}
+}
+
+export type GetItemPathResponseMap = {
+${itemResponseEntries}
 }
 `;
 
   // Ensure directory exists
-  const outputPath = './types/openapi-collection-operations.d.ts';
+  const outputPath = './types/openapi-operations.d.ts';
   mkdirSync(dirname(outputPath), {recursive: true});
 
   // Write the file
   writeFileSync(outputPath, tsContent, 'utf8');
 
-  console.log(`Generated ${outputPath} with ${collectionOperations.length} collection operations`);
+  console.log(`Generated ${outputPath} with ${collectionOperations.length} collection operations and ${itemOperations.length} item operations`);
   console.log('Collection paths:', collectionOperations.map(({path}) => path).join(', '));
+  console.log('Item paths:', itemOperations.map(({path}) => path).join(', '));
 
 } catch (error) {
   console.error('Error generating collection responses types:', error.message);

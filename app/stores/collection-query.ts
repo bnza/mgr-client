@@ -1,29 +1,16 @@
 import qs from 'qs';
-import type {ApiAclResource, CollectionResponse, CollectionResponses} from "~~/types";
+import type {ApiAclResource, GetCollectionResponse, GetCollectionPathResponseMap} from "~~/types";
 import useCollectionPaginationStore from "~/stores/collection-pagination";
 
-const useCollectionQueryStore = <PATH extends keyof CollectionResponses>(path: PATH) => {
+const useCollectionQueryStore = <PATH extends keyof GetCollectionPathResponseMap>(path: PATH) => {
   return defineStore(`collection-query:${path}`, () => {
     // Get the response type directly from our mapping
-    type ApiResponse = CollectionResponse<PATH> & ApiAclResource
+    type ApiResponse = GetCollectionResponse<PATH> & ApiAclResource
 
     const paginationStore = useCollectionPaginationStore(path)
     const {query: paginationQuery} = storeToRefs(paginationStore)
 
-    const config = useRuntimeConfig()
-    const baseURL = config.public.apiBaseUrl
-
-    const {token} = useAuth()
-
-    const headers = computed(() => {
-      const _headers: Record<string, string> = {
-        'Content-Type': 'application/ld+json',
-      }
-      if (token.value) {
-        _headers['Authorization'] = `Bearer ${token.value}`
-      }
-      return _headers
-    })
+    const {baseURL, headers} = useApiRequestConfig()
 
     const {data, status, error, refresh} = useQuery<ApiResponse>({
       key: () => [path, paginationQuery.value, headers.value],

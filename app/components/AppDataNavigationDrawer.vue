@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import {ApiRole} from "~/utils/consts/auth";
 
 const {visible, dataOpened} = storeToRefs(useDataNavigationDrawerStore())
+const {hasRole} = useAppAuth()
 </script>
 
 <template>
@@ -35,6 +37,23 @@ const {visible, dataOpened} = storeToRefs(useDataNavigationDrawerStore())
           router
           title="Sites"
           data-testid="app-nav-drawer-li-sites"
+        />
+      </v-list-group>
+      <v-list-group v-if="hasRole(ApiRole.Admin)" value="Admin">
+        <template #activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            prepend-icon="fas fa-screwdriver-wrench"
+            title="Admin"
+            data-testid="app-nav-drawer-li-admin"
+          />
+        </template>
+        <v-list-item
+          nuxt
+          to="/admin/users"
+          router
+          title="Users"
+          data-testid="app-nav-drawer-li-users"
         />
       </v-list-group>
       <v-list-item

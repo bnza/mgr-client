@@ -1,6 +1,6 @@
-<script setup lang="ts" generic="PATH extends keyof CollectionResponses">
+<script setup lang="ts" generic="PATH extends keyof GetCollectionPathResponseMap">
 
-import type {CollectionResponses} from "~~/types";
+import type {GetCollectionPathResponseMap} from "~~/types";
 import useCollectionQueryStore from "~/stores/collection-query";
 import useCollectionTableHeadersStore from "~/stores/collection-table-headers";
 

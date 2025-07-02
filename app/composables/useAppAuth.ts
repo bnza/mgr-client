@@ -16,7 +16,15 @@ export default function useAppAuth() {
     return isAppRole(role) ? ROLE_COLORS[role] : '#FFF'
   })
 
+  const hasRoleFn = (role: ApiRole) => roles.value.includes(role)
+  const hasRole = computed(
+    () => hasRoleFn
+  )
+  const hasRoleAdmin = computed(() => hasRoleFn(ApiRole.Admin))
+
   return {
+    hasRole,
+    hasRoleAdmin,
     isAuthenticated,
     roles,
     roleColor,

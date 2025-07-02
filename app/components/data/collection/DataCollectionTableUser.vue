@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type {CollectionResponses} from "~~/types";
+import type {GetCollectionPathResponseMap} from "~~/types";
 
 const resourceKey = "user"
 
 // Define the specific operation path for sites as a const
-const GET_COLLECTION_OPERATION = "/api/users" as const satisfies keyof CollectionResponses
+const GET_COLLECTION_OPERATION = "/api/users" as const satisfies keyof GetCollectionPathResponseMap
 </script>
 
 <template>

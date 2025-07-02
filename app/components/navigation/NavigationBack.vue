@@ -28,6 +28,7 @@ onUnmounted(() => {
   <v-tooltip location="bottom" :text="tooltipText">
     <template #activator="{ props: actProps }">
       <v-btn
+        :to="to.path"
         :disabled
         data-testid="navigation-back-button"
         class="ma-0 pa-0"

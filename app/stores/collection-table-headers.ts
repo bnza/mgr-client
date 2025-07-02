@@ -1,10 +1,9 @@
-import qs from 'qs';
-import type {ApiDataResourceKey, CollectionResponse, CollectionResponses, PathsWithMethod} from "~~/types";
+import type {ApiDataResourceKey, GetCollectionResponse, GetCollectionPathResponseMap, PathsWithMethod} from "~~/types";
 import {API_RESOURCE_MAP} from "~/utils/consts/resources";
 import {RESOURCE_CONFIG_MAP} from "~/utils/consts/configs";
 
 
-const useCollectionTableHeadersStore = <PATH extends keyof CollectionResponses>(path: PATH) => {
+const useCollectionTableHeadersStore = <PATH extends keyof GetCollectionPathResponseMap>(path: PATH) => {
   return defineStore(`collection-table-headers:${path}`, () => {
 
     const resourceKey = Object.entries(API_RESOURCE_MAP)
