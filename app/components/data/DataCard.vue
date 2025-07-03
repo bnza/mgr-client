@@ -6,12 +6,16 @@ const props = withDefaults(
     title: string
     identifier?: string
     loading?: boolean
+    showBackButton?: boolean
   }>(),
   {
-    loading: false
+    loading: false,
+    showBackButton: true
   })
 
 defineSlots<{
+  actions(): any
+  append(): any
   default(): any
   'toolbar-append'(): any
 }>()
@@ -22,9 +26,9 @@ defineSlots<{
     data-testid="data-card"
     :loading
     :rounded="false"
-    class="w-100 h-100"
+    class="w-100 h-100 no-padding"
   >
-    <template #default>
+    <template #item>
       <data-card-toolbar v-bind="$props">
         <template #toolbar-append>
           <slot name="toolbar-append"/>
@@ -34,5 +38,20 @@ defineSlots<{
         <loading-component/>
       </slot>
     </template>
+    <template #actions>
+      <v-card-actions class="pa-0">
+        <slot name="actions"/>
+      </v-card-actions>
+    </template>
+    <template #append>
+      <slot name="append"/>
+    </template>
   </v-card>
 </template>
+
+<style scoped>
+.no-padding :deep(.v-card-item) {
+  padding: 0 !important;
+  display: block;
+}
+</style>

@@ -1,4 +1,4 @@
-import type {DataTableComponentOptions, PathsWithMethod} from "~~/types";
+import type {DataTableComponentOptions, GetCollectionPathResponseMap} from "~~/types";
 import {dataTableOptionsToQsObject} from "~/utils/requests";
 
 const defaultPagination = () => ({
@@ -8,7 +8,7 @@ const defaultPagination = () => ({
   groupBy: [],
 }) as const as DataTableComponentOptions
 
-const useCollectionPaginationStore = <PATH extends PathsWithMethod<'get'>>(path: PATH) => {
+const useCollectionPaginationStore = <PATH extends keyof GetCollectionPathResponseMap>(path: PATH) => {
   return defineStore(`collection-query-pagination:${path}`, () => {
     const component = reactive(defaultPagination())
 

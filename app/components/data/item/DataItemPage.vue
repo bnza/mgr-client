@@ -9,6 +9,7 @@ const props = defineProps<{
 }>()
 
 defineSlots<{
+  append(): any
   default(props: { item: GetItemPathResponseMap[PATH] }): any
   'toolbar-append'(): any
 }>()
@@ -37,9 +38,9 @@ id.value = routeId
       <resource-not-found v-else-if="error !== null" :error="error" :path="props.path"/>
       <slot v-else-if="item" v-bind="{item}"/>
     </template>
+    <template #append>
+      <slot name="append"/>
+    </template>
   </data-card>
 </template>
 
-<style scoped>
-
-</style>

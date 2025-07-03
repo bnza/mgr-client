@@ -5,5 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-  <lazy-data-collection-table-site/>
+  <lazy-data-collection-page-site/>
 </template>
