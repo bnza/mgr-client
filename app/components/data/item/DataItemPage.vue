@@ -5,6 +5,12 @@ import type {GetItemPathResponseMap} from "~~/types";
 const props = defineProps<{
   path: PATH,
   title: string
+  identifier?: string
+}>()
+
+defineSlots<{
+  default(props: { item: GetItemPathResponseMap[PATH] }): any
+  'toolbar-append'(): any
 }>()
 
 const {routeId} = useAppRoute()
@@ -18,10 +24,19 @@ id.value = routeId
 </script>
 
 <template>
-  <data-card :title>
-    <loading-component v-if="status === 'pending'"/>
-    <resource-not-found v-else-if="error !== null" :error="error" :path="props.path"/>
-    <slot v-else-if="item" v-bind="{item}"/>
+  <data-card
+    :title
+    :identifier
+    :loading="status === 'pending'"
+  >
+    <template #toolbar-append>
+      <slot name="toolbar-append"/>
+    </template>
+    <template #default>
+      <loading-component v-if="status === 'pending'"/>
+      <resource-not-found v-else-if="error !== null" :error="error" :path="props.path"/>
+      <slot v-else-if="item" v-bind="{item}"/>
+    </template>
   </data-card>
 </template>
 

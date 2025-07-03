@@ -15,12 +15,14 @@ const queryStore = useCollectionQueryStore(props.operation)
 
 <template>
   <v-data-table-server
+    data-testid="data-collection-table"
     fixed-footer
     fixed-header
     :headers
     :items="queryStore.items"
     :items-length="queryStore.totalItems"
     :items-per-page="queryStore.pagination.itemsPerPage"
+    :loading="queryStore.status === 'pending'"
     multi-sort
     :page="queryStore.pagination.page"
     :sort-by="queryStore.pagination.sortBy"

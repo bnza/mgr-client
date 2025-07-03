@@ -9,7 +9,5 @@ definePageMeta({
 </script>
 
 <template>
-  <data-card title="Sites">
-    <lazy-data-collection-table-user/>
-  </data-card>
+  <lazy-data-collection-table-user/>
 </template>

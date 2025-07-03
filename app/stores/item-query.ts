@@ -22,7 +22,10 @@ const useItemQueryStore = <PATH extends keyof GetItemPathResponseMap>(path: PATH
       enabled: !id.value
     })
 
+    const acl = computed(() => data.value?._acl)
+
     return {
+      acl,
       id,
       data,
       status,

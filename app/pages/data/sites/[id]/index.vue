@@ -2,8 +2,6 @@
 definePageMeta({
   public: true,
 })
-
-const route = useRoute()
 </script>
 
 <template>

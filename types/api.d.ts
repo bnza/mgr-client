@@ -1,4 +1,5 @@
 import type {operations, paths} from './openapi'
+import type {DataStateStatus} from "@pinia/colada";
 
 export type ApiOrderKeys<T extends string> = {
   [K in T as `order[${K}]`]?: 'asc' | 'desc'
@@ -40,6 +41,13 @@ export type BaseAcl = {
   canDelete: boolean
 }
 
+export type CollectionAcl = {
+  canCreate: boolean
+  canExport: boolean
+}
+
 export interface ApiAclResource {
   _acl: BaseAcl
 }
+
+export type ApiResourceDataStateStatus = DataStateStatus | 'ongoing'
