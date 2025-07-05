@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import type {BaseAcl} from "~~/types";
-import {defaultBaseAcl} from "~/utils/consts/auth";
 
 defineProps<{
   appPath: string

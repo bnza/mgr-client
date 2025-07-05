@@ -6,6 +6,7 @@ export * from './openapi'
 export * from './openapi-helpers'
 export * from './openapi-operations'
 export * from './resources'
+export * from './validation'
 export * from './vuetify'
 export type {ApiResourceKey} from '~/utils/consts/resources'
 

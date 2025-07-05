@@ -16,3 +16,21 @@ export type GetItemPathResponseMap = {
   '/api/sites/{siteId}/user_privileges/{id}': operations['api_sites_siteIduser_privileges_id_get']['responses'][200]['content']['application/ld+json']
   '/api/users/{id}': operations['api_users_id_get']['responses'][200]['content']['application/ld+json']
 }
+
+export type PostPath = '/api/login' | '/api/sites' | '/api/site_user_privileges' | '/api/users' | '/api/users/me/change_password'
+
+export type PostPathResponseMap = {
+  [P in PostPath]:   P extends '/api/login' ? operations['login_check_post']['responses'][201]['content']['application/ld+json'] :
+  P extends '/api/sites' ? operations['api_sites_post']['responses'][201]['content']['application/ld+json'] :
+  P extends '/api/site_user_privileges' ? operations['api_site_user_privileges_post']['responses'][201]['content']['application/ld+json'] :
+  P extends '/api/users' ? operations['api_users_post']['responses'][201]['content']['application/ld+json'] :
+  P extends '/api/users/me/change_password' ? operations['api_usersmechange_password_post']['responses'][201]['content']['application/ld+json'] : never
+}
+
+export type PostPathRequestMap = {
+  [P in PostPath]:   P extends '/api/login' ? operations['login_check_post']['requestBody']['content']['application/ld+json'] :
+  P extends '/api/sites' ? operations['api_sites_post']['requestBody']['content']['application/ld+json'] :
+  P extends '/api/site_user_privileges' ? operations['api_site_user_privileges_post']['requestBody']['content']['application/ld+json'] :
+  P extends '/api/users' ? operations['api_users_post']['requestBody']['content']['application/ld+json'] :
+  P extends '/api/users/me/change_password' ? operations['api_usersmechange_password_post']['requestBody']['content']['application/ld+json'] : never
+}

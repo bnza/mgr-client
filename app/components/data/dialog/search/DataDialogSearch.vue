@@ -27,7 +27,7 @@ const {isDialogOpen: visible} = storeToRefs(useCollectionSearchStore(props.path)
     </template>
     <template #actions>
       <v-btn
-        data-testid="data-dialog-search-close-button"
+        data-testid="data-dialog-close-button"
         @click="visible=false"
       >close
       </v-btn>

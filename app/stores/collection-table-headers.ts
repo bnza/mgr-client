@@ -1,4 +1,4 @@
-import type {ApiDataResourceKey, GetCollectionResponse, GetCollectionPathResponseMap, PathsWithMethod} from "~~/types";
+import type {ApiDataResourceKey, GetCollectionPathResponseMap} from "~~/types";
 import {API_RESOURCE_MAP} from "~/utils/consts/resources";
 import {RESOURCE_CONFIG_MAP} from "~/utils/consts/configs";
 

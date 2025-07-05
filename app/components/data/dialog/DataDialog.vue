@@ -24,7 +24,11 @@ defineSlots<{
         <slot/>
       </template>
       <template #actions>
-        <slot name="actions"/>
+        <v-container>
+          <v-row justify="space-around">
+            <slot name="actions"/>
+          </v-row>
+        </v-container>
       </template>
     </data-card>
   </v-dialog>

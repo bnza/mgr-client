@@ -39,9 +39,7 @@ defineSlots<{
       </slot>
     </template>
     <template #actions>
-      <v-card-actions class="pa-0">
-        <slot name="actions"/>
-      </v-card-actions>
+      <slot name="actions"/>
     </template>
     <template #append>
       <slot name="append"/>
